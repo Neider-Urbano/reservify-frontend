@@ -20,7 +20,7 @@
         </p>
       </div>
 
-      <div class="mb-6">
+      <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="password"
           >Contraseña</label
         >
@@ -37,12 +37,23 @@
         </p>
       </div>
 
-      <div class="flex items-center justify-between">
+      <p *ngIf="apiError" class="text-red-500 text-xs italic pb-4">
+        {{ apiError }}
+      </p>
+
+      <div class="flex items-center justify-between mt-2">
         <button
           type="submit"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Iniciar Sesión
+        </button>
+        <button
+          type="button"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          (click)="navigateToRegister()"
+        >
+          Registrarse
         </button>
       </div>
     </form>
