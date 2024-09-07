@@ -1,0 +1,49 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Service } from '../models/service.model';
+import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { checkToken } from '../interceptors/token.interceptor';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ServiceService {
+  apiUrl = environment.API_URL + '/services';
+
+  private servicesSubject = new BehaviorSubject<Service[]>([]);
+  services$ = this.servicesSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  getServices(): Observable<Service[]> {
+    return this.http
+      .get<Service[]>(this.apiUrl, { context: checkToken() })
+      .pipe(
+        tap((services) => {
+          this.servicesSubject.next(services);
+        })
+      );
+  }
+
+  createService(service: {
+    name: string;
+    description: string;
+    price: number;
+  }): Observable<any> {
+    return this.http
+      .post<Service>(`${this.apiUrl}`, service, {
+        context: checkToken(),
+      })
+      .pipe(
+        tap((newService) => {
+          const currentServices = this.servicesSubject.getValue();
+          this.servicesSubject.next([...currentServices, newService]);
+        })
+      );
+  }
+
+  getCurrentServices(): Service[] {
+    return this.servicesSubject.getValue();
+  }
+}

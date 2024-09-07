@@ -1,13 +1,11 @@
 <nav class="bg-gray-800 p-4">
   <div class="container mx-auto flex items-center justify-between flex-wrap">
-    <!-- Nombre del Proyecto -->
     <div class="flex items-center flex-shrink-0 text-white mr-6">
       <span class="font-semibold text-xl tracking-tight">
         Reservation System
       </span>
     </div>
 
-    <!-- Botón de menú para dispositivos móviles -->
     <div class="block lg:hidden">
       <button
         class="flex items-center px-3 py-2 border rounded text-gray-400 border-gray-400 hover:text-white hover:border-white"
@@ -24,33 +22,40 @@
       </button>
     </div>
 
-    <!-- Opciones de navegación -->
     <div
       class="w-full block flex-grow lg:flex lg:items-center lg:w-auto"
       [ngClass]="{ hidden: !showMenu }"
     >
       <div class="text-sm lg:flex-grow">
         <a
-          href="#"
+          routerLink="/app"
           class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4"
         >
-          Reservas
+          Lista de Servicios
         </a>
         <a
-          href="#"
+          routerLink="/app/my-reservations"
           class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4"
         >
           Mis Reservas
         </a>
-        <a
-          href="#"
-          class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white"
-        >
-          Servicios
-        </a>
+
+        <ng-container *ngIf="isAdmin">
+          <a
+            routerLink="/app/create-service"
+            class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4"
+          >
+            Crear Servicio
+          </a>
+          <a
+            routerLink="/app/list-services"
+            class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4"
+          >
+            Listar Servicios
+          </a>
+        </ng-container>
       </div>
 
-      <!-- Dropdown de usuario -->
       <div class="relative inline-block text-center w-full lg:w-auto">
         <div>
           <button
@@ -74,7 +79,6 @@
           </button>
         </div>
 
-        <!-- Dropdown Menu (centrado en móvil y alineado en escritorio) -->
         <div
           class="origin-top-right absolute right-0 lg:right-0 lg:left-auto left-1/2 transform -translate-x-1/2 lg:transform-none mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
           [ngClass]="{ hidden: !showDropdown }"
