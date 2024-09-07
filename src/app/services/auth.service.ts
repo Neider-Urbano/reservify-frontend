@@ -11,7 +11,7 @@ import { TokenService } from './token.service';
   providedIn: 'root',
 })
 export class AuthService {
-  apiUrl = environment.API_URL;
+  apiUrl = environment.API_URL + '/auth';
   user$ = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
