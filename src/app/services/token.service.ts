@@ -37,4 +37,13 @@ export class TokenService {
 
     return false;
   }
+
+  getUserIdFromToken(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      return decodedToken._id || null;
+    }
+    return null;
+  }
 }

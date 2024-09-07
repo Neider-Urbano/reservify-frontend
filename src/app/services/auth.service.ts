@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, switchMap, tap } from 'rxjs';
-import { TokenService } from './token.service';
 import { environment } from '../environments/environment';
 import { checkToken } from '../interceptors/token.interceptor';
 import { User } from '../models/user.model';
 import { ResponseLogin } from '../models/auth.model';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -47,16 +47,14 @@ export class AuthService {
     );
   }
 
-  isAvailable(email: string) {
-    return this.http.post<{ isAvailable: boolean }>(
-      `${this.apiUrl}/is-available`,
-      { email }
-    );
-  }
-
   getProfile() {
+    const userId = this.tokenService.getUserIdFromToken();
+    if (!userId) {
+      return this.user$.asObservable();
+    }
+
     return this.http
-      .get<User>(`${this.apiUrl}/profile`, {
+      .get<User>(`${this.apiUrl}/users/${userId}`, {
         context: checkToken(),
       })
       .pipe(
@@ -68,5 +66,27 @@ export class AuthService {
 
   logout() {
     this.tokenService.removeToken();
+  }
+
+  updateUserRole(role: string) {
+    const userId = this.tokenService.getUserIdFromToken();
+    if (!userId) {
+      return this.user$.asObservable();
+    }
+
+    return this.http
+      .put(
+        `${this.apiUrl}/users/${userId}`,
+        { role: role },
+        {
+          context: checkToken(),
+        }
+      )
+      .subscribe({
+        next: () => {
+          this.getProfile().subscribe();
+        },
+        error: () => {},
+      });
   }
 }
