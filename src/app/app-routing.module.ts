@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RedirectGuard } from './guards/redirect.guard';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'login', canActivate: [RedirectGuard], component: LoginComponent },
@@ -12,7 +13,7 @@ const routes: Routes = [
     canActivate: [RedirectGuard],
     component: RegisterComponent,
   },
-  { path: 'app', canActivate: [AuthGuard], component: RegisterComponent },
+  { path: 'app', canActivate: [AuthGuard], component: DashboardComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

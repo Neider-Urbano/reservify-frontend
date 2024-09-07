@@ -48,8 +48,13 @@ export class AuthService {
   }
 
   getProfile() {
+    const userId = this.tokenService.getUserIdFromToken();
+    if (!userId) {
+      return this.user$.asObservable();
+    }
+
     return this.http
-      .get<User>(`${this.apiUrl}/profile`, {
+      .get<User>(`${this.apiUrl}/users/${userId}`, {
         context: checkToken(),
       })
       .pipe(
@@ -61,5 +66,27 @@ export class AuthService {
 
   logout() {
     this.tokenService.removeToken();
+  }
+
+  updateUserRole(role: string) {
+    const userId = this.tokenService.getUserIdFromToken();
+    if (!userId) {
+      return this.user$.asObservable();
+    }
+
+    return this.http
+      .put(
+        `${this.apiUrl}/users/${userId}`,
+        { role: role },
+        {
+          context: checkToken(),
+        }
+      )
+      .subscribe({
+        next: () => {
+          this.getProfile().subscribe();
+        },
+        error: () => {},
+      });
   }
 }
