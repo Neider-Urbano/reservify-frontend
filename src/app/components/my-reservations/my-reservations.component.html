@@ -1,0 +1,42 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-semibold mb-4">Mis Reservas</h2>
+  <table
+    class="min-w-full bg-white border border-gray-200 rounded-md shadow-md"
+  >
+    <thead>
+      <tr class="w-full bg-gray-100 border-b border-gray-200">
+        <th class="py-2 px-4 text-left text-gray-600">Servicio</th>
+        <th class="py-2 px-4 text-left text-gray-600">Fecha</th>
+        <th class="py-2 px-4 text-left text-gray-600">Comentarios</th>
+        <th class="py-2 px-4 text-left text-gray-600">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let reservation of reservations"
+        class="border-b border-gray-200"
+      >
+        <td class="py-2 px-4">{{ reservation.service }}</td>
+
+        <td class="py-2 px-4">{{ reservation.date | date : "medium" }}</td>
+        <td class="py-2 px-4">
+          {{ reservation.comments || "Sin comentarios" }}
+        </td>
+        <td class="py-2 px-4">
+          <button
+            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded mr-2"
+            (click)="editReservation(reservation)"
+          >
+            Editar
+          </button>
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
+            (click)="cancelReservation(reservation._id)"
+          >
+            Cancelar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
