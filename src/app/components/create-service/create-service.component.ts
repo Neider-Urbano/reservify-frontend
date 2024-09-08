@@ -9,10 +9,13 @@ import { ServiceService } from 'src/app/services/service.service';
 })
 export class CreateServiceComponent {
   service: Service = {
+    _id: '',
     name: '',
     description: '',
     price: 0,
   };
+
+  errorMessage: string = '';
 
   constructor(private serviceService: ServiceService, private router: Router) {}
 
@@ -20,15 +23,20 @@ export class CreateServiceComponent {
     this.serviceService.createService(this.service).subscribe({
       next: () => {
         this.resetForm();
+        this.errorMessage = '';
+        alert('¡Servicio creado exitosamente!');
       },
-      error: (error) => {
-        console.error('Error al crear el servicio', error);
+      error: (err) => {
+        console.error('Error al crear servicio:', err);
+        this.errorMessage =
+          'Hubo un error al crear el servicio. Intenta de nuevo.';
       },
     });
   }
 
   private resetForm() {
     this.service = {
+      _id: '',
       name: '',
       description: '',
       price: 0,

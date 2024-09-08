@@ -89,4 +89,8 @@ export class AuthService {
         error: () => {},
       });
   }
+
+  isUserRolAdmin() {
+    return this.user$.getValue()?.role == 'admin';
+  }
 }

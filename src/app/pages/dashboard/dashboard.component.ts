@@ -5,10 +5,4 @@ import { AuthService } from 'src/app/services/auth.service';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent implements OnInit {
-  constructor(private authService: AuthService) {}
-
-  ngOnInit() {
-    this.authService.getProfile().subscribe();
-  }
-}
+export class DashboardComponent {}

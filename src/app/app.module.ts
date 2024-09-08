@@ -12,6 +12,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { CreateServiceComponent } from './components/create-service/create-service.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ListServicesComponent } from './components/list-services/list-services.component';
+import { ReservarComponent } from './components/reservar/reservar.component';
+import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     DashboardComponent,
     CreateServiceComponent,
     NotFoundComponent,
+    ListServicesComponent,
+    ReservarComponent,
+    MyReservationsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
