@@ -22,6 +22,10 @@ export class NavbarComponent {
         this.isAdmin = user.role === 'admin';
       }
     });
+
+    if (this.userName.length < 1) {
+      this.authService.getProfile().subscribe();
+    }
   }
 
   logout() {

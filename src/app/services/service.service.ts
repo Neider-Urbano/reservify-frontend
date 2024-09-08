@@ -10,9 +10,7 @@ import { checkToken } from '../interceptors/token.interceptor';
 })
 export class ServiceService {
   apiUrl = environment.API_URL + '/services';
-
-  private servicesSubject = new BehaviorSubject<Service[]>([]);
-  services$ = this.servicesSubject.asObservable();
+  servicesSubject$ = new BehaviorSubject<Service[]>([]);
 
   constructor(private http: HttpClient) {}
 
@@ -21,7 +19,7 @@ export class ServiceService {
       .get<Service[]>(this.apiUrl, { context: checkToken() })
       .pipe(
         tap((services) => {
-          this.servicesSubject.next(services);
+          this.servicesSubject$.next(services);
         })
       );
   }
@@ -32,18 +30,31 @@ export class ServiceService {
     price: number;
   }): Observable<any> {
     return this.http
-      .post<Service>(`${this.apiUrl}`, service, {
+      .post<{ message: string; service: Service }>(`${this.apiUrl}`, service, {
         context: checkToken(),
       })
       .pipe(
         tap((newService) => {
-          const currentServices = this.servicesSubject.getValue();
-          this.servicesSubject.next([...currentServices, newService]);
+          const currentServices = this.servicesSubject$.getValue();
+          this.servicesSubject$.next([...currentServices, newService.service]);
         })
       );
   }
 
   getCurrentServices(): Service[] {
-    return this.servicesSubject.getValue();
+    return this.servicesSubject$.getValue();
+  }
+
+  deleteService(id: string): Observable<any> {
+    return this.http
+      .delete(`${this.apiUrl}/${id}`, { context: checkToken() })
+      .pipe(
+        tap(() => {
+          const currentServices = this.servicesSubject$.getValue();
+          this.servicesSubject$.next(
+            currentServices.filter((service) => service._id !== id)
+          );
+        })
+      );
   }
 }
