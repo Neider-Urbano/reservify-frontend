@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { RedirectGuard } from './guards/redirect.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { CreateServiceComponent } from './components/create-service/create-service.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   { path: 'login', canActivate: [RedirectGuard], component: LoginComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
     ],
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
