@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://your-api-url',
+  API_URL: 'https://reservify-backend-silk.vercel.app/',
 };
