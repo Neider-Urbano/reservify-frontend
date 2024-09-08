@@ -1,0 +1,62 @@
+<div class="container mx-auto py-8">
+  <h2 class="text-2xl font-semibold mb-4">Reservar Servicio</h2>
+
+  <form (ngSubmit)="reserve()">
+    <div class="mb-4">
+      <label for="service" class="block text-sm font-medium text-gray-700"
+        >Selecciona un Servicio</label
+      >
+      <select
+        id="service"
+        name="service"
+        [(ngModel)]="selectedServiceId"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        required
+      >
+        <option *ngFor="let service of services" [value]="service._id">
+          {{ service.name }} - {{ service.price | currency }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label for="date" class="block text-sm font-medium text-gray-700"
+        >Fecha de Reserva</label
+      >
+      <input
+        id="date"
+        name="date"
+        type="date"
+        [(ngModel)]="reservationDate"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="comments" class="block text-sm font-medium text-gray-700"
+        >Comentarios</label
+      >
+      <textarea
+        id="comments"
+        name="comments"
+        [(ngModel)]="comments"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div *ngIf="errorMessage" class="text-red-600 mb-4">
+      {{ errorMessage }}
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        class="inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Reservar
+      </button>
+    </div>
+  </form>
+</div>
