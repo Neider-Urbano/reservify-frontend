@@ -13,7 +13,7 @@ Este es el frontend del sistema de reservas Reservify, construido con Angular y 
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/tu-usuario/reservify-frontend.git
+   git clone https://github.com/Neider-Urbano/reservify-frontend
    ```
 
 2. Navega al directorio del proyecto:
